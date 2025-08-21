@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="./assets/home/BELLO7LOGO.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YLY - فريق تطوير الموارد البشرية</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    :root {
+      --primary-color: #2b68ff;
+      --primary-hover: #1c4de1;
+      --accent-color: #ffc107;
+      --golden-hover: #ffd700;
+      --text-color: #fff;
+      --bg-overlay: rgba(0, 0, 50, 0.4);
+      --form-bg: rgba(255, 255, 255, 0.1);
+      --input-bg: rgba(255,255,255,0.2);
+      --input-hover: rgba(255,255,255,0.3);
+      --border-radius: 14px;
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --mobile-breakpoint: 768px;
+      --tablet-breakpoint: 992px;
+      --field-green: #3a9b46;
+      --field-lines: rgba(255, 255, 255, 0.7);
+      --goal-color: #e0e0e0;
+      --goal-net: rgba(0, 0, 0, 0.1);
+      --yly-blue: #1a4f8b;
+      --yly-gold: #d4af37;
+      --yly-green: #2e8b57;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: url('./assets/home/BG.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--text-color);
+      overflow-x: hidden;
+      font-size: 16px;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.441);
+      z-index: -1;
+    }
+    
+    /* شريط التنقل - شفاف تماماً */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 5%;
+      background: transparent;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+    
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+    }
+    
+    .logo-section img {
+      height: 80px;
+      width: auto;
+      transition: all 0.5s ease;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+    }
+    
+    .logo-section img:hover {
+      transform: scale(1.15) rotate(5deg);
+      filter: drop-shadow(0 8px 20px rgba(212, 175, 55, 0.5));
+    }
+    
+    /* شخصية بيلو التفاعلية - نسخة كرة القدم */
+    .bilo-character {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 99;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      animation: biloFloat 3s ease-in-out infinite;
+    }
+
+    .bilo-character img {
+      width: 120px;
+      cursor: pointer;
+      transition: all 0.3s;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+    }
+
+    .bilo-character:hover img {
+      transform: scale(1.1);
+      animation: biloFloatHover 2s ease-in-out infinite;
+    }
+
+    .bilo-tooltip {
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 15px;
+      border-radius: 15px;
+      width: 250px;
+      max-width: 90vw;
+      text-align: center;
+      font-size: 0.85em;
+      line-height: 1.6;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
+      z-index: 1000;
+      white-space: normal;
+      word-wrap: break-word;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      margin-bottom: 10px;
+    }
+
+    .bilo-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      right: 20px;
+      border-width: 8px;
+      border-style: solid;
+      border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
+    }
+
+    .bilo-character.active .bilo-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* تأثيرات الجزيئات - كرات قدم صغيرة */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .particle {
+      position: absolute;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="white"/><path d="M50,5 A45,45 0 1,1 50,95 A45,45 0 1,1 50,5 z" fill="none" stroke="black" stroke-width="2"/><path d="M5,50 H95" stroke="black" stroke-width="2"/><circle cx="50" cy="50" r="15" fill="none" stroke="black" stroke-width="2"/></svg>') no-repeat center center;
+      background-size: contain;
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+    }
+    
+    @keyframes floatParticle {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+    
+    /* كرة قدم متحركة */
+    .soccer-ball {
+      position: fixed;
+      width: 70px;
+      height: 70px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg') no-repeat center center;
+      background-size: contain;
+      z-index: -1;
+      animation: bounceBallRandom 30s linear infinite;
+      opacity: 0.7;
+    }
+    
+    @keyframes bounceBallRandom {
+      0% {
+        top: 10%;
+        left: 5%;
+        transform: rotate(0deg);
+      }
+      20% {
+        top: 15%;
+        left: 80%;
+        transform: rotate(180deg);
+      }
+      40% {
+        top: 70%;
+        left: 60%;
+        transform: rotate(360deg);
+      }
+      60% {
+        top: 40%;
+        left: 25%;
+        transform: rotate(540deg);
+      }
+      80% {
+        top: 75%;
+        left: 85%;
+        transform: rotate(720deg);
+      }
+      100% {
+        top: 10%;
+        left: 5%;
+        transform: rotate(900deg);
+      }
+    }
+    
+    /* محتوى صفحة البرزنتيشن */
+    .presentation-page {
+      padding: 40px 5% 60px; /* تم تقليل padding-top لرفع المحتوى لأعلى */
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .presentation-header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    
+    .presentation-title {
+      font-size: 2.5rem;
+      color: var(--yly-gold);
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .presentation-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: var(--yly-blue);
+      border-radius: 2px;
+    }
+    
+    .presentation-subtitle {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* قسم المقدمة */
+    .intro-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 60px;
+      text-align: center;
+    }
+    
+    .intro-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .intro-logo {
+      height: 120px; /* تكبير الشعارات */
+      width: auto;
+      transition: all 0.3s;
+    }
+    
+    .intro-logo:hover {
+      transform: scale(1.2); /* تأثير هوفر للشعارات */
+      filter: drop-shadow(0 0 15px var(--yly-gold));
+    }
+    
+    .intro-message {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-top: 20px;
+      max-width: 800px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      font-size: 0.95rem;
+    }
+    
+    .intro-message::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transform: translateX(-100%);
+      transition: 0.6s;
+    }
+    
+    .intro-message:hover::before {
+      transform: translateX(100%);
+    }
+    
+    .hr-thanks {
+      color: var(--yly-gold);
+      font-weight: 700;
+    }
+    
+    /* أقسام البرزنتيشن */
+    .presentation-section {
+      margin-bottom: 80px;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+      color: var(--yly-gold);
+      margin-bottom: 30px;
+      text-align: center;
+      position: relative;
+      display: block;
+      width: 100%;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--yly-blue);
+      border-radius: 2px;
+    }
+    
+    /* مقدمة بيلو لكل قسم */
+    .bilo-intro {
+      background: rgba(26, 79, 139, 0.7);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-bottom: 30px;
+      border-left: 5px solid var(--yly-gold);
+      font-style: italic;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .bilo-intro::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 3rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* بطاقات نقاط القوة والضعف */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+    
+    .presentation-card {
+      background: rgba(26, 79, 139, 0.7);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .presentation-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transform: translateX(-100%);
+      transition: 0.6s;
+    }
+    
+    .presentation-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+      background: rgba(26, 79, 139, 0.9);
+    }
+    
+    .presentation-card:hover::before {
+      transform: translateX(100%);
+    }
+    
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    
+    .presentation-card:hover .card-icon {
+      transform: scale(1.2);
+      color: var(--yly-gold);
+    }
+    
+    .card-title {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: var(--yly-gold);
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+    
+    .card-content {
+      flex-grow: 1;
+    }
+    
+    .card-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .card-list li {
+      margin-bottom: 10px;
+      padding-right: 20px;
+      position: relative;
+    }
+    
+    .card-list li::before {
+      content: '•';
+      color: var(--yly-gold);
+      font-weight: bold;
+      position: absolute;
+      right: 0;
+    }
+    
+    /* نقاط القوة - لون مختلف */
+    .strength-card {
+      border-top: 4px solid #4CAF50;
+    }
+    
+    .strength-card .card-icon {
+      color: #4CAF50;
+    }
+    
+    /* نقاط الضعف - لون مختلف */
+    .weakness-card {
+      border-top: 4px solid #F44336;
+    }
+    
+    .weakness-card .card-icon {
+      color: #F44336;
+    }
+    
+    /* نقاط التطور - لون مختلف */
+    .improvement-card {
+      border-top: 4px solid #FF9800;
+    }
+    
+    .improvement-card .card-icon {
+      color: #FF9800;
+    }
+    
+    /* خطة الفريق الزرقاء */
+    .blue-plan-card {
+      border-top: 4px solid #2196F3;
+    }
+    
+    .blue-plan-card .card-icon {
+      color: #2196F3;
+    }
+    
+    .month-section {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed rgba(255,255,255,0.3);
+    }
+    
+    .month-section:last-child {
+      border-bottom: none;
+    }
+    
+    .month-title {
+      color: var(--yly-gold);
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .week-plan {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .week-title {
+      color: #4FC3F7;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    /* قسم الشكر في النهاية */
+    .thanks-section {
+      text-align: center;
+      padding: 30px 20px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: var(--border-radius);
+      margin-top: 60px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--yly-gold);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .thanks-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+      transform: translateX(-100%);
+      transition: 0.6s;
+    }
+    
+    .thanks-section:hover::before {
+      transform: translateX(100%);
+    }
+    
+    .thanks-title {
+      color: var(--yly-gold);
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .thanks-message {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .saad-profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+      gap: 10px;
+    }
+    
+    .saad-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid var(--yly-gold);
+      object-fit: cover;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
+    .saad-name {
+      font-size: 1.3rem;
+      color: var(--yly-gold);
+      font-weight: bold;
+    }
+    
+    .saad-role {
+      font-size: 1rem;
+      color: #fff;
+      background: var(--yly-blue);
+      padding: 5px 15px;
+      border-radius: 20px;
+    }
+    
+    .goodbye-message {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: var(--yly-gold);
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    /* تأثيرات الحركة */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-card {
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
+    }
+    
+    @keyframes biloFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes biloFloatHover {
+      0%, 100% {
+        transform: translateY(0) scale(1.1);
+      }
+      50% {
+        transform: translateY(-15px) scale(1.1);
+      }
+    }
+    
+    /* تحسينات للهواتف المحمولة */
+    @media (max-width: 768px) {
+      .presentation-page {
+        padding: 30px 3% 40px; /* تقليل الهامش العلوي أكثر في الموبايل */
+      }
+      
+      .presentation-title {
+        font-size: 2rem;
+      }
+      
+      .presentation-subtitle {
+        font-size: 1rem;
+      }
+      
+      .section-title {
+        font-size: 1.6rem;
+      }
+      
+      .intro-logo {
+        height: 100px; /* تكبير الشعارات في الموبايل */
+      }
+      
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .bilo-character {
+        width: 100px;
+        bottom: 20px;
+        right: 20px;
+      }
+      
+      .bilo-character img {
+        width: 100px; /* حجم بيلو يصغر في الموبايل */
+      }
+      
+      .bilo-tooltip {
+        width: 200px;
+        font-size: 0.8em;
+        padding: 10px;
+        right: 0;
+      }
+      
+      .nav-bar {
+        padding: 10px 3%;
+      }
+      
+      .logo-section img {
+        height: 60px;
+      }
+      
+      .thanks-title {
+        font-size: 1.5rem;
+      }
+      
+      .thanks-message {
+        font-size: 0.9rem;
+      }
+      
+      .saad-image {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .goodbye-message {
+        font-size: 1rem;
+      }
+      
+      .intro-message {
+        padding: 15px;
+        font-size: 0.9rem;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .presentation-page {
+        padding: 20px 3% 30px; /* تقليل الهامش العلوي أكثر في الشاشات الصغيرة */
+      }
+      
+      .presentation-title {
+        font-size: 1.8rem;
+      }
+      
+      .bilo-character {
+        width: 80px;
+        bottom: 15px;
+        right: 15px;
+      }
+      
+      .bilo-character img {
+        width: 80px; /* حجم بيلو أصغر في الشاشات الصغيرة */
+      }
+      
+      .bilo-tooltip {
+        width: 180px;
+      }
+      
+      .logo-section img {
+        height: 50px;
+      }
+      
+      .intro-logo {
+        height: 80px; /* تكبير الشعارات أكثر في الشاشات الصغيرة */
+      }
+      
+      .thanks-title {
+        font-size: 1.4rem;
+      }
+      
+      .thanks-message {
+        font-size: 0.85rem;
+      }
+      
+      .saad-image {
+        width: 90px;
+        height: 90px;
+      }
+      
+      .saad-name {
+        font-size: 1.2rem;
+      }
+      
+      .saad-role {
+        font-size: 0.9rem;
+      }
+      
+      .goodbye-message {
+        font-size: 0.9rem;
+      }
+      
+      .intro-message {
+        padding: 12px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="particles" id="particles"></div>
+<div class="soccer-ball" id="soccer-ball"></div>
+
+<!-- شخصية بيلو التفاعلية - النسخة المحسنة -->
+<div class="bilo-character" id="bilo-character">
+  <div class="bilo-tooltip" id="bilo-tooltip">
+    يلا يا شباب! أنا بيلو، صاحبكم في رحلة YLY. أنا فرحان أوي أكون معاكم في العرض ده!
+  </div>
+  <img src="./assets/home/BILLO7.png" alt="بيلو المساعد الشخصي" id="bilo-image">
+</div>
+
+<!-- شريط التنقل الموحد - تم التعديل -->
+<div class="nav-bar">
+  <!-- شعار الوزارة على اليمين -->
+  <div class="logo-section">
+    <img src="./assets/home/logo-ministry.png" alt="شعار الوزارة">
+  </div>
+  
+  <!-- شعار الموسم الحالي على اليسار -->
+  <div class="logo-section">
+    <img src="./assets/home/SESSON7.png" alt="شعار الموسم الحالي">
+  </div>
+</div>
+
+<!-- محتوى صفحة البرزنتيشن -->
+<div class="presentation-page">
+  <!-- المقدمة -->
+  <div class="intro-section" data-bilo-message="أهلاً بيكوا في العرض التقديمي بتاعنا! احنا متحمسين نعرض عليكم تقييمنا لذاتنا.">
+    <div class="intro-logos">
+      <img src="./assets/home/minestry-sports.png" alt="وزارة الشباب والرياضة" class="intro-logo">
+      <img src="./assets/home/logo-yly-minsttry.png" alt="YLY" class="intro-logo">
+    </div>
+    
+    <h1 class="presentation-title">فريق تطوير الموارد البشرية</h1>
+    <p class="presentation-subtitle">بنقدم لكم تقييمنا الذاتي ونقاط قوتنا وضعفنا وخطة التطوير المستقبلية لفريق تطوير الموارد البشرية في مشروع YLY للموسم السابع</p>
+    
+    <div class="intro-message">
+      <p>أهلاً بيكوا في عرضنا التقديمي، وبنوجه شكر خاص لمسؤولة <span class="hr-thanks">الموارد البشرية المركزية</span> على دعمها المستمر وثقتها في فريقنا، اللي كانت دافع كبير لينا لتطوير أدائنا وابتكارنا في الشغل.</p>
+    </div>
+  </div>
+  <br><br>
+  
+  <!-- قسم نقاط القوة - التحديث الجديد -->
+  <div class="presentation-section" data-bilo-message="هنا بنعرض نقاط قوتنا اللي بتميز فريقنا عن غيروا!">
+    <h2 class="section-title">نقاط القوة</h2>
+    
+    <div class="bilo-intro">
+      <i class="fas fa-quote-left"></i> 
+      يا جماعة الخير، هنا هنلاقي كل حاجة بتميزنا وبتخلي فريقنا ملهوش مثيل! هنتكلم عن المهارات الشخصية والقيادية والاجتماعية وإدارة الوقت وغيرها كتير. استعدوا علشان ده هيفيدكم في مستقبلكم المهني!
+    </div>
+    
+    <div class="cards-grid">
+      <!-- المهارات الشخصية والقيادية -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.1s" data-bilo-message="المهارات الشخصية والقيادية دي أساس نجاح فريقنا!">
+        <div class="card-icon">
+          <i class="fas fa-user-tie"></i>
+        </div>
+        <h3 class="card-title">المهارات الشخصية والقيادية</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>القيادة</li>
+            <li>الثقة بالنفس</li>
+            <li>تحمل المسؤولية</li>
+            <li>الطموح</li>
+            <li>العمل باجتهاد</li>
+            <li>الصبر</li>
+            <li>الثبات الانفعالي (عدم التأثر بالنقد السلبي)</li>
+            <li>التفاؤل والطاقة الإيجابية</li>
+            <li>تقدير الذات</li>
+            <li>عدم الخوف (الشجاعة)</li>
+            <li>روح التحدي</li>
+            <li>الانضباط</li>
+            <li>الجدية</li>
+            <li>الصدق</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- المهارات الاجتماعية والتواصلية -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.2s" data-bilo-message="التواصل الفعال هو سر تفوق فريقنا في الشغل مع الآخرين!">
+        <div class="card-icon">
+          <i class="fas fa-comments"></i>
+        </div>
+        <h3 class="card-title">المهارات الاجتماعية والتواصلية</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>مهارات التواصل الفعال</li>
+            <li>التحدث أمام الجمهور</li>
+            <li>التحدث بلباقة</li>
+            <li>الذكاء الاجتماعي</li>
+            <li>الذكاء العاطفي</li>
+            <li>قوة الملاحظة</li>
+            <li>القدرة على الإقناع والتفاوض</li>
+            <li>القدرة على تحфиز الآخرين</li>
+            <li>مستمع متعاون بشكل كبير</li>
+            <li>منفتحة ومستعدة لتلقي أي feedback بدون حساسية</li>
+            <li>تقبل آراء الآخرين</li>
+            <li>الاستماع لمشاكل الآخرين وحلها</li>
+            <li>مصدر دعم للأشخاص المحيطين</li>
+            <li>الاجتماعية</li>
+            <li>يعرف يفهم الي قدامه (التعاطف)</li>
+            <li>الحيادية في التعامل</li>
+            <li>التعامل المناسب مع جميع الفئات</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- كفاءات العمل والتعلم -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.3s" data-bilo-message="بنتعلم بسرعة وبنتكيف مع التحديات الجديدة!">
+        <div class="card-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h3 class="card-title">كفاءات العمل والتعلم</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>سرعة التعلم</li>
+            <li>حب التعلم</li>
+            <li>التعلم المستمر</li>
+            <li>الفضول المعرفي</li>
+            <li>حب الاكتشاف والتعمق</li>
+            <li>السعي للتطوير</li>
+            <li>التعلم من الأخطاء</li>
+            <li>وجود رغبة مستمرة في تطوير النفس واكتساب مهارات جديدة</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- إدارة الذات والوقت -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.4s" data-bilo-message="بنتميز بالانضباط والالتزام بالمواعيد!">
+        <div class="card-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        <h3 class="card-title">إدارة الذات والوقت</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>إدارة الوقت</li>
+            <li>الالتزام بالمواعيد</li>
+            <li>الانضباط في المواعيد</li>
+            <li>ترتيب الأولويات</li>
+            <li>النظام والتخطيط الجيد</li>
+            <li>التوازن بين المسؤوليات (وميزة تمييز وقت الشغل عن وقت الهزار)</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- العمل الجماعي والتعاون -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.5s" data-bilo-message="العمل الجماعي هو أساس نجاحنا!">
+        <div class="card-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3 class="card-title">العمل الجماعي والتعاون</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>العمل ضمن فريق</li>
+            <li>روح الفريق</li>
+            <li>التعاون</li>
+            <li>الدعم للفريق كله</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- المهارات التحليلية والإبداعية -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.6s" data-bilo-message="بنفكر خارج الصندوق وبنبتكر حلول إبداعية!">
+        <div class="card-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h3 class="card-title">المهارات التحليلية والإبداعية</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>حل المشكلات</li>
+            <li>تحليل المواقف</li>
+            <li>التفكير المنطقي</li>
+            <li>التفكير الإبداعي (خارج الصندوق)</li>
+            <li>إدارة الأزمات</li>
+            <li>الابداع</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- المرونة والتكيف -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.7s" data-bilo-message="بنكيف بسرعة مع أي تغيير أو تحدٍ جديد!">
+        <div class="card-icon">
+          <i class="fas fa-sync-alt"></i>
+        </div>
+        <h3 class="card-title">المرونة والتكيف</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>المرونة والتكيف</li>
+            <li>التأقلم على أي مكان جديد بسرعة</li>
+            <li>مرونة تكتيكية</li>
+            <li>طاقة التحمل</li>
+            <li>العمل تحت الضغط</li>
+            <li>الهدوء تحت الضغط</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- مهارات أخرى قيمة -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.8s" data-bilo-message="عندنا مهارات كتير قيمة بنتميز بيها!">
+        <div class="card-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <h3 class="card-title">مهارات أخرى قيمة</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>المحاولة وعدم الاستسلام</li>
+            <li>الاعتماد على النفس والاستمرارية</li>
+            <li>الوعي بدور اللجنة داخل الفريق</li>
+            <li>القابلية للنقد</li>
+            <li>المهارات التقنية (الإلمام ببرامج Office)</li>
+            <li>الرسم</li>
+            <li>ارتباط الخلفية التعليمية بمجال التخصص</li>
+            <li>تدعيم لسوق العمل (المعرفة بسوق العمل)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- قسم نقاط الضعف المحدث -->
+  <div class="presentation-section" data-bilo-message="هنا بنعترف بنقاط ضعفنا عشان نعمل على تحسينها!">
+    <h2 class="section-title">نقاط الضعف</h2>
+    
+    <div class="bilo-intro">
+      <i class="fas fa-quote-left"></i> 
+      مفيش حد كامل يا صحبي! هنا هنعترف بالحاجات اللي محتاجة مننا تطوير. الاعتراف بالضعف ده علامة قوة، ومش هنستحمل نقول على نفسنا weak علشان نشتغل على تحسينها. كلنا عندنا حاجات بنعاني منها، والمهم نعرفها ونحاول نتخطاها!
+    </div>
+    
+    <div class="cards-grid">
+      <!-- الشخصية والانفعالات -->
+      <div class="presentation-card weakness-card animate-card" style="animation-delay: 0.1s" data-bilo-message="بنعمل على تحسين السيطرة على انفعالاتنا!">
+        <div class="card-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <h3 class="card-title">الشخصية والانفعالات</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>الخوف من عدم النجاح</li>
+            <li>عدم التحكم في انفعالات</li>
+            <li>العصبية</li>
+            <li>سرعة البكاء</li>
+            <li>الحساسية المفرطة</li>
+            <li>الإحباط</li>
+            <li>جلد الذات</li>
+            <li>الاندفاع والتهور</li>
+            <li>الكسل</li>
+            <li>الخجل</li>
+            <li>عدم الصبر</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- المهارات الاجتماعية -->
+      <div class="presentation-card weakness-card animate-card" style="animation-delay: 0.2s" data-bilo-message="بنطور مهاراتنا الاجتماعية علشان نتواصل بشكل أحسن!">
+        <div class="card-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3 class="card-title">المهارات الاجتماعية</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>الرهاب الاجتماعي</li>
+            <li>عدم الاجتماعية</li>
+            <li>الانطوائية</li>
+            <li>صعوبة تكوين علاقات جديدة</li>
+            <li>صعوبة الاختلاط (في بعض السياقات)</li>
+            <li>صعوبة التعبير عن الرأي</li>
+            <li>صعوبة مشاركة الأفكار</li>
+            <li>التوتر أثناء الكلام أمام الجمهور</li>
+            <li>رعب من مسكة المايك</li>
+            <li>صعوبة تحليل الشخصيات</li>
+            <li>عدم وجود استراتيجيات لحل النزاعات</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- العمل والأداء المهني -->
+      <div class="presentation-card weakness-card animate-card" style="animation-delay: 0.3s" data-bilo-message="بنسعى لتحسين أدائنا المهني وإدارة وقتنا!">
+        <div class="card-icon">
+          <i class="fas fa-briefcase"></i>
+        </div>
+        <h3 class="card-title">العمل والأداء المهني</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>عدم إدارة الوقت</li>
+            <li>التسويف والتأجيل</li>
+            <li>التأخير</li>
+            <li>صعوبة تحديد الأولويات</li>
+            <li>ضعف إتقان برامج الأوفيس</li>
+            <li>قلة الخبرة العملية</li>
+            <li>العمل الفردي</li>
+            <li>عدم القدرة على العمل تحت الضغط</li>
+            <li>فقدان الشغف بسرعة</li>
+            <li>التوقف عند عدم وجود دupport</li>
+            <li>جهل بسياسات عمل معينة (مثل اللجان)</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- أنماط التفكير واتخاذ القرار -->
+      <div class="presentation-card weakness-card animate-card" style="animation-delay: 0.4s" data-bilo-message="بنعمل على تحسين عملية اتخاذ القرارات!">
+        <div class="card-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h3 class="card-title">أنماط التفكير واتخاذ القرار</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>التردد في اتخاذ القرارات</li>
+            <li>التفكير المفرط</li>
+            <li>التركيز الزائد على التفاصيل</li>
+            <li>مبدأ "الكُل أو لا شيء" (All or Nothing)</li>
+            <li>السعي للمثالية</li>
+            <li>عدم تقدير الأمور بشكل صحيح</li>
+            <li>البطء في التأقلم</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- العلاقات الشخصية والحدود -->
+      <div class="presentation-card weakness-card animate-card" style="animation-delay: 0.5s" data-bilo-message="بنتعلم إزاي نعمل حدود صحية في العلاقات!">
+        <div class="card-icon">
+          <i class="fas fa-handshake"></i>
+        </div>
+        <h3 class="card-title">العلاقات الشخصية والحدود</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>صعوبة قول "لا"</li>
+            <li>الانزعاج من تدخل الآخرين في الخصوصيات</li>
+            <li>استغلال الآخرين للطيبة</li>
+            <li>إعطاء اهتمام كبير للآخرين</li>
+            <li>التأثر السلبي بمشاكل الآخرين</li>
+            <li>عدم تقبل النقد</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- العادات والسلوكيات اليومية -->
+      <div class="presentation-card weakness-card animate-card" style="animation-delay: 0.6s" data-bilo-message="بنطور عادات يومية أحسن علشان نزيد إنتاجيتنا!">
+        <div class="card-icon">
+          <i class="fas fa-calendar"></i>
+        </div>
+        <h3 class="card-title">العادات والسلوكيات اليومية</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>الملل من الروتين</li>
+            <li>عدم التوازن بين العمل والراحة</li>
+            <li>الرغبة في نتائج سريعة</li>
+            <li>التشتت</li>
+            <li>كثرة النسيان</li>
+            <li>الاعتماد على التحفيز الخارجي فقط</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- قسم نقاط التطوير المحدث -->
+  <div class="presentation-section" data-bilo-message="ده مخططنا علشان نطور من نفسنا في المستقبل!">
+    <h2 class="section-title">نقاط التطوير</h2>
+    
+    <div class="bilo-intro">
+      <i class="fas fa-quote-left"></i> 
+      هنا هنتكلم عن الخطط المستقبلية علشان نطور من نفسنا. مش هنقف عند الضعف، لا هنشتغل عليه! كل نقطة ضعف ليها حل، وكل مهارة بنحتاجها هنكتسبها. استعدوا علشان هنتكلم عن خطط عملية هتفرق معانا!
+    </div>
+    
+    <div class="cards-grid">
+      <!-- التطوير الشخصي والأساسي -->
+      <div class="presentation-card improvement-card animate-card" style="animation-delay: 0.1s" data-bilo-message="التطوير الشخصي هو أساس النجاح!">
+        <div class="card-icon">
+          <i class="fas fa-user-graduate"></i>
+        </div>
+        <h3 class="card-title">التطوير الشخصي والأساسي</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>المرونة والتكيف</li>
+            <li>التعلم مستمر</li>
+            <li>تقبل النقد</li>
+            <li>تنظيم الوقت</li>
+            <li>الالتزام بالمواعيد</li>
+            <li>الاستمرارية</li>
+            <li>التركيز</li>
+            <li>الصبر</li>
+            <li>عدم اليأس</li>
+            <li>الشجاعة</li>
+            <li>كسر الخجل</li>
+            <li>تطوير الصحة النفسية</li>
+            <li>تحقيق التوازن بين نواحي الحياة المختلفة</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- المهارات المهنية والتقنية -->
+      <div class="presentation-card improvement-card animate-card" style="animation-delay: 0.2s" data-bilo-message="بنتعلم باستمرار علشان نواكب متطلبات سوق العمل!">
+        <div class="card-icon">
+          <i class="fas fa-laptop-code"></i>
+        </div>
+        <h3 class="card-title">المهارات المهنية والتقنية</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>تطوير مهارات Excel</li>
+            <li>تعلم واستخدام برامج HR</li>
+            <li>تطوير المهارات التقنية بشكل عام</li>
+            <li>التعلم عن الموارد البشرية (HR)</li>
+            <li>زيادة المعرفة حول السيرة الذاتية (CV)</li>
+            <li>تطوير حساب LinkedIn</li>
+            <li>استخدام أدوار مثل Canva</li>
+            <li>الاستعداد لسوق العمل</li>
+            <li>اكتساب خبرات من أماكن عمل مختلفة</li>
+            <li>التطبيق العملي للمعرفة النظرية</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- المهارات الاجتماعية والتواصل -->
+      <div class="presentation-card improvement-card animate-card" style="animation-delay: 0.3s" data-bilo-message="التواصل الفعال هو مفتاح النجاح في العمل الجماعي!">
+        <div class="card-icon">
+          <i class="fas fa-handshake"></i>
+        </div>
+        <h3 class="card-title">المهارات الاجتماعية والتواصل</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>تطوير المهارات الاجتماعية</li>
+            <li>مهارات التواصل والإقناع</li>
+            <li>التحدث بشكل لائق وفعال</li>
+            <li>التعامل مع الجمهور</li>
+            <li>التفاعل مع الناس</li>
+            <li>الاستماع لآراء الآخرين</li>
+            <li>فهم أنماط الشخصيات المختلفة</li>
+            <li>تعلم كيفية إخراج أفضل نتيجة من أي نقاش</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- الذكاء العاطفي وإدارة المشاعر -->
+      <div class="presentation-card improvement-card animate-card" style="animation-delay: 0.4s" data-bilo-message="الذكاء العاطفي بيساعدنا نشتغل بفعالية أكبر!">
+        <div class="card-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h3 class="card-title">الذكاء العاطفي وإدارة المشاعر</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>إدارة الانفعالات والمشاعر</li>
+            <li>التحكم في العصبية</li>
+            <li>تطوير الذكاء العاطفي</li>
+            <li>التعامل مع الضغط</li>
+            <li>تعلم مشاركة المشاكل</li>
+            <li>فهم الشخصية بشكل أفضل (التعارف الذاتي)</li>
+            <li>تقليل المثالية المفرطة</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- المهارات القيادية والإدارية -->
+      <div class="presentation-card improvement-card animate-card" style="animation-delay: 0.5s" data-bilo-message="القيادة الفعالة بتقود الفريق نحو النجاح!">
+        <div class="card-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3 class="card-title">المهارات القيادية والإدارية</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>تطوير مهارات القيادة</li>
+            <li>القيادة بالتأثير (وليس بالأوامر)</li>
+            <li>العمل الجماعي</li>
+            <li>حل المشكلات</li>
+            <li>تنظيم وتحديد الأولويات</li>
+            <li>سرعة الإنجاز مع الحفاظ على الجودة</li>
+            <li>فهم آليات عمل اللجان</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- التفكير والقدرات التحليلية -->
+      <div class="presentation-card improvement-card animate-card" style="animation-delay: 0.6s" data-bilo-message="التفكير التحليلي بيساعدنا ناخد قرارات أحسن!">
+        <div class="card-icon">
+          <i class="fas fa-chart-pie"></i>
+        </div>
+        <h3 class="card-title">التفكير والقدرات التحليلية</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li> اتخاذ القرارات بشكل أسرع وأفضل</li>
+            <li>تطوير التفكير النقدي</li>
+            <li>تطوير التفكير التحليلي</li>
+            <li>زيادة الثقة بالنفس</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- قسم المهارات المراد اكتسابها -->
+  <div class="presentation-section" data-bilo-message="دي المهارات اللي بنسعى نكتسبها علشان نطور أدائنا!">
+    <h2 class="section-title">المهارات المراد اكتسابها</h2>
+    
+    <div class="bilo-intro">
+      <i class="fas fa-quote-left"></i> 
+      يا جماعة، العالم بيتغير ومحتاجين نكتسب مهارات جديدة علشان نفضل منافسين. هنا هنتكلم عن المهارات التقنية والقيادية والاجتماعية اللي بنحتاج نتعلمها. كل مهارة هتضيف لحياتنا المهنية والشخصية!
+    </div>
+    
+    <div class="cards-grid">
+      <!-- المهارات التقنية والرقمية -->
+      <div class="presentation-card improvement-card animate-card" style="animation-delay: 0.1s" data-bilo-message="المهارات التقنية أساسية في عالم اليوم الرقمي!">
+        <div class="card-icon">
+          <i class="fas fa-laptop"></i>
+        </div>
+        <h3 class="card-title">المهارات التقنية والرقمية (Hard Skills)</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>إتقان حزمة Microsoft Office (Word, Excel, PowerPoint)</li>
+            <li>تحليل البيانات (Data Analysis) باستخدام Excel وغيره</li>
+            <li>أدوات الموارد البشرية (HR Tools)</li>
+            <li>استخدام منصات مثل Google Forms, Canva, Notion, Trello</li>
+            <li>مهارات التصميم (مثل Adobe Photoshop)</li>
+            <li>التسويق الرقمي (Digital Marketing)</li>
+            <li>البرمجة (تم ذكرها بشكل عابر)</li>
+            <li>كتابة السيرة الذاتية (CV) بطريقة احترافية</li>
+            <li>المعرفة بلينكد إن بشكل احترافي</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- المهارات الشخصية والقيادية -->
+      <div class="presentation-card improvement-card animate-card" style="animation-delay: 0.2s" data-bilo-message="القيادة الفعالة هي مفتاح النجاح في إدارة الفرق!">
+        <div class="card-icon">
+          <i class="fas fa-user-tie"></i>
+        </div>
+        <h3 class="card-title">المهارات الشخصية والقيادية (Soft & Leadership Skills)</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>مهارات القيادة (Leadership Skills)</li>
+            <li>إدارة الفريق والعمل الجماعي (Teamwork & Management)</li>
+            <li>تحمل المسؤولية</li>
+            <li>اتخاذ القرارات السريعة والحاسمة</li>
+            <li>الإبداع والابتكار (Creative Thinking)</li>
+            <li>التخطيط الاستراتيجي</li>
+            <li>إدارة الأزمات (Crisis Management)</li>
+            <li>Design Thinking (التفكير التصميمي)</li>
+            <li>التدريب والتطوير (Training & Development)</li>
+            <li>التقيمات وإدارة الأداء (Performance Management)</li>
+            <li>التوظيف وإجراء المقابلات (Interviewing Techniques)</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- مهارات التواصل والتأثير -->
+      <div class="presentation-card improvement-card animate-card" style="animation-delay: 0.3s" data-bilo-message="التواصل الفعال بيعمل العمل الجماعي أكثر كفاءة!">
+        <div class="card-icon">
+          <i class="fas fa-comments"></i>
+        </div>
+        <h3 class="card-title">مهارات التواصل والتأثير</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>مهارات التواصل والتعبير بوضوح</li>
+            <li>مهارات التفاوض والإقناع (Negotiation & Persuasion)</li>
+            <li>العرض والتقديم (Presentation Skills)</li>
+            <li>التحدث أمام الجمهور (Public Speaking)</li>
+            <li>الذكاء الاجتماعي وفهم الشخصيات المختلفة</li>
+            <li>لغة الجسد</li>
+            <li>بناء العلاقات الاجتماعية</li>
+            <li>مشاركة المعرفة مع الآخرين</li>
+            <li>حل النزاعات وإدارة الشكاوى</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- الكفاءات الشخصية والإدارية -->
+      <div class="presentation-card improvement-card animate-card" style="animation-delay: 0.4s" data-bilo-message="الإدارة الفعالة للوقت والضغط بتزيد إنتاجيتنا!">
+        <div class="card-icon">
+          <i class="fas fa-cogs"></i>
+        </div>
+        <h3 class="card-title">الكفاءات الشخصية والإدارية</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>إدارة الوقت (Time Management) وتنظيم الأولويات</li>
+            <li>العمل تحت الضغط (Stress Management)</li>
+            <li>المرونة والتكيف</li>
+            <li>الذكاء العاطفي (Emotional Intelligence)</li>
+            <li>حل المشكلات (Problem-Solving)</li>
+            <li>الفصل بين الحياة العملية والشخصية</li>
+            <li>العادات الصحية</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- مجالات المعرفة المتخصصة -->
+      <div class="presentation-card improvement-card animate-card" style="animation-delay: 0.5s" data-bilo-message="المعرفة المتخصصة بتقدرنا نقدم قيمة أكبر!">
+        <div class="card-icon">
+          <i class="fas fa-book"></i>
+        </div>
+        <h3 class="card-title">مجالات المعرفة المتخصصة</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>المعرفة المتعمقة في مجال الموارد البشرية (HR)</li>
+            <li>People Analytics (تحليل بيانات الموظفين)</li>
+            <li>تجربة الموظف (Employee Experience)</li>
+            <li>القوانين labor laws واللوائح المتعلقة بالعمل</li>
+            <li>الإدارة المركزية</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- قسم مدى معرفة المتطوعين عن الموارد البشرية -->
+  <div class="presentation-section" data-bilo-message="ده مستوى معرفة فريقنا بمجال الموارد البشرية!">
+    <h2 class="section-title">مدى معرفة المتطوعين وخلفيتهم عن الموارد البشرية</h2>
+    
+    <div class="bilo-intro">
+      <i class="fas fa-quote-left"></i> 
+      علشان نعرف نطور من نفسنا في مجال الـ HR، لازم الأول نعرف إيه هو الـ HR أصلاً! هنا هنتكلم عن المهام الأساسية والقيادية والاستراتيجية لمسؤول الموارد البشرية. كله هيبقى واضح وبتفصيل!
+    </div>
+    
+    <div class="cards-grid">
+      <!-- المهام الأساسية والوظيفية -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.1s" data-bilo-message="بنفهم المهام الأساسية للموارد البشرية كويس!">
+        <div class="card-icon">
+          <i class="fas fa-tasks"></i>
+        </div>
+        <h3 class="card-title">المهام الأساسية والوظيفية</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>التوظيف والاختيار: المسؤولية عن عملية التوظيف بالكامل، بدءًا من الإعلان عن الوظائف، وإجراء المقابلات (الانترفيو)، واختيار الأعضاء/الموظفين المناسبين ووضع الشخص المناسب في المكان المناسب.</li>
+            <li>التدريب والتطوير: تقديم التدريبات وورش العمل اللازمة لتنمية مهارات الأعضاء وتطويرها باستمرار.</li>
+            <li>تقييم الأداء: متابعة وتقييم أداء الأفراد والتزامهم بشكل دوري لضمان تحقيق الأهداف (التارجت) والحفاظ على جودة الأداء.</li>
+            <li>إدارة السياسات: المسؤولية عن وضع وتطبيق القوانين والسياسات الداخلية للمنظمة وضمان سير العمل وفقًا لها.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- الدور القيادي والدعمي -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.2s" data-bilo-message="بنقوم بدور قيادي وداعم للفريق بأكمله!">
+        <div class="card-icon">
+          <i class="fas fa-hands-helping"></i>
+        </div>
+        <h3 class="card-title">الدور القيادي والدعمي</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>حلقة الوصل: يكون HR حلقة الوصل والربط بين الإدارة (الليدرز) والأعضاء (التيم)، وينقل مشاكل واحتياجات الطرفين.</li>
+            <li>الدعم والتحفيز: تقديم الدعم المعنوي والنفسي المستمر للأعضاء، وتحفيزهم لتعزيز شغفهم وأدائهم (تحفيز معنوي ومادي مثل المكافآت).</li>
+            <li>حل المشكلات: العمل на حل النزاعات والمشكلات التي تنشأ بين الأعضاء أو بينهم وبين الإدارة بشكل حيادي وعقلاني.</li>
+            <li>تحسين بيئة العمل: خلق وتحسين بيئة عمل إيجابية ومريحة وآمنة تشجع على الإبداع والإنتاجية وتحافظ على التوازن بين العمل والراحة.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- الصفات والمهارات الشخصية لمسؤول HR -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.3s" data-bilo-message="عندنا الصفات اللازمة لمسؤولي الموارد البشرية!">
+        <div class="card-icon">
+          <i class="fas fa-user-check"></i>
+        </div>
+        <h3 class="card-title">الصفات والمهارات الشخصية لمسؤول HR</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>القيادة: أن يكون قائدًا وليس مديرًا فقط، يقود بالتأثير والإرشاد.</li>
+            <li>المرونة والذكاء الاجتماعي: القدرة على التعامل مع أنماط وشخصيات مختلفة بشكل مرن وفعّال.</li>
+            <li>الحيادية والموضوعية: أن يكون عادلاً ومنطقياً وغير عاطفي في اتخاذ القرارات.</li>
+            <li>مستمع جيد: القدرة على الاستماع بفعالية لفهم مشاكل واحتياجات الفريق.</li>
+            <li>الصبر والتأني: التحلي بالصبر في التعامل مع المواقف الصعبة والمختلفة.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- الجانب الاستراتيجي والتحليلي -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.4s" data-bilo-message="بنشارك في التخطيط الاستراتيجي للمنظمة!">
+        <div class="card-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3 class="card-title">الجانب الاستراتيجي والتحليلي</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>التخطيط: المشاركة في التخطيط الاستراتيجي للموسم أو للمنظمة، خاصة فيما يتعلق بالعنصر البشري.</li>
+            <li>تحليل البيانات (People Analytics): جمع وتحليل بيانات الأعضاء لفهمهم بشكل أفضل واتخاذ قرارات مدعومة بالمعلومات لتحسين الأداء العام.</li>
+            <li>إدارة المواهب: العمل على استدامة القوى البشرية، وتعويض النقص بسرعة، والاحتفاظ بالمواهب داخل المنظمة.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- الإدراك العام لدور HR -->
+      <div class="presentation-card strength-card animate-card" style="animation-delay: 0.5s" data-bilo-message="بنعي تماماً أهمية ودور الموارد البشرية في المنظمة!">
+        <div class="card-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h3 class="card-title">الإدراك العام لدور HR</h3>
+        <div class="card-content">
+          <ul class="card-list">
+            <li>العمود الفقري: يُنظر إلى HR على أنه العمود الفقري أو العقل المدبر لأي منظمة ناجحة، فهو أساس نجاح أي منظومة.</li>
+            <li>إدارة رأس المال البشري: لا يقتصر الدور على المهام الإدارية فحسب، بل هو مسؤول عن إدارة وتنمية أهم مورد في أي مكان: الأفراد.</li>
+            <li>دور شمولي: دوره ليس مؤقتًا بل يبدأ من لحظة انضمام الفرد للمنظمة وحتى مغادرته، ويهتم بجميع الجوانب المتعلقة به.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- قسم خطة الفريق الأزرق للثلاثة أشهر المقبلة -->
+  <div class="presentation-section" data-bilo-message="دي خطتنا للشهور التلاتة الجاية! هنتطور ونتعلم كتير">
+    <h2 class="section-title">خطه الفريق الازرق للثلاث شهور المقبلة</h2>
+    
+    <div class="bilo-intro">
+      <i class="fas fa-quote-left"></i> 
+      يلا يا شباب! دي خطة متظبطه لـ 3 شهور الي جايين ، هنتعامل مع كل حاجة من نقطة الضعف لحد ما نوصل لأقوى فريق HR. الخطة كلها هتكون مبنية على 3 حاجات: جلسة أسبوعية (كل خميس مثلاً)، تاسك تطبيقي كل أسبوع، ومشروع نهائي خلال 3 شهور. استعدوا علشان هنتغير!
+    </div>
+    
+    <div class="cards-grid">
+      <!-- الشهر الأول -->
+      <div class="presentation-card blue-plan-card animate-card" style="animation-delay: 0.1s">
+        <div class="card-icon">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <h3 class="card-title">الشهر الأول: شهر الأساسيات والثقة</h3>
+        <div class="card-content">
+          <p><strong>الهدف:</strong> نرفع الثقة بنفسنا ونتعلم الأساسيات الإدارية.</p>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الأول (1-7)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-chalkboard-teacher"></i> جلسة "احنا مين وإزاي نشتغل مع بعض"</h5>
+              <ul class="card-list">
+                <li>هنعرف إيه هو دور HR الحقيقي ف أي منظمة (مش مجرد إنترفيو)</li>
+                <li>هنعمل ورشة لفهم شخصيات بعض (عشان نعرف نتعامل مع بعض كويس)</li>
+                <li>التطبيق: كل واحد يقول نقاط قوته وضعفه عشان نعرف ندي له tasks مناسبة</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الثاني (8-14)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-clock"></i> جلسة "ملهاش حل.. هنتعلم الوقت"</h5>
+              <ul class="card-list">
+                <li>ازاي ننظم وقتنا (مفيش حاجة اسمها تسويف)</li>
+                <li>ازاي نحدد الأولويات (إيه اللي نعمله الاول وإيه اللي نتأخر فيه)</li>
+                <li>التطبيق: كل واحد يعمل plan لـ أسبوعه ويحاول يلتزم بيها</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الثالث (15-21)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-microphone"></i> جلسة "متتكسفش وقول رأيك"</h5>
+              <ul class="card-list">
+                <li>ازاي نتكلم أمام الناس من غير توتر (عرض تقديمي بسيط)</li>
+                <li>ازاي نعبر عن رأينا بطريقة محترمة</li>
+                <li>التطبيق: كل واحد يقدم 3 دقائق عن أي topic يحبه</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الرابع (22-28)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-brain"></i> جلسة "اللي حصل خلاص.. نسيطرة على أعصابنا"</h5>
+              <ul class="card-list">
+                <li>إدارة الانفعالات والذكاء العاطفي (متصعش من أي حاجة)</li>
+                <li>ازاي نتقبل النقد من غير ما نتأثر نفسياً</li>
+                <li>التطبيق: تمثيل أدوار لمواقف صعبة بنرد فيها بطريقة متحضرة</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- الشهر الثاني -->
+      <div class="presentation-card blue-plan-card animate-card" style="animation-delay: 0.2s">
+        <div class="card-icon">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <h3 class="card-title">الشهر التاني: شهر الشغل الحقيقي</h3>
+        <div class="card-content">
+          <p><strong>الهدف:</strong> نتعلم المهارات التقنية والإدارية لشغل الـ HR.</p>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الأول (29-4)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-file-excel"></i> جلسة "إكسيل هو صاحبنا"</h5>
+              <ul class="card-list">
+                <li>أساسيات الإكسيل المهمة لـ HR (عمل جداول، فرز وعمل filters)</li>
+                <li>التطبيق: نعمل جدول متابعة لـ أعضاء الفريق بيه</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الثاني (5-11)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-user-friends"></i> جلسة "إزاي تختار الناس الصح"</h5>
+              <ul class="card-list">
+                <li>فنيات عمل الانترفيو (إزاي تسأل أسئلة كويسة، إزاي تقيم الإجابات)</li>
+                <li>التطبيق: تمثيل أدوار لعمل انترفيو كامل، وكل واحد فينا يقيّم</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الثالث (12-18)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-comment-dots"></i> جلسة "إزاي تدي feedback ييجي بكيفه"</h5>
+              <ul class="card-list">
+                <li>إزاي تقول لحد أن أداؤه وحش من غير ما تجرحه</li>
+                <li>إزاي تشجعه وهو قاعد غلط</li>
+                <li>التطبيق: ندي feedback لبعض بناءً على التطبيق اللي ف الأسبوع اللي فات</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الرابع (19-25)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-puzzle-piece"></i> جلسة "مشاكل ومشاكل.. واحنا نحلها"</h5>
+              <ul class="card-list">
+                <li>استراتيجيات حل المشكلات بين الأعضاء</li>
+                <li>إزاي تبقى وسيط نزيه</li>
+                <li>التطبيق: دراسة حالة (Case Study) لمشكلة حصلت ف الماضي ونحاول نحلها</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- الشهر الثالث -->
+      <div class="presentation-card blue-plan-card animate-card" style="animation-delay: 0.3s">
+        <div class="card-icon">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <h3 class="card-title">الشهر التالت: شهر الاحتراف والتطبيق</h3>
+        <div class="card-content">
+          <p><strong>الهدف:</strong> نطبق كل اللي تعلمناه على مشروع حقيقي ونتعلم التخطيط الاستراتيجي.</p>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الأول (26-2)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-chart-line"></i> جلسة "إزاي تخطط للمستقبل"</h5>
+              <ul class="card-list">
+                <li>أساسيات التخطيط الاستراتيجي للقطاع البشري</li>
+                <li>إزاي نضع أهداف (Targets) ذكية لفريقك</li>
+                <li>التطبيق: نبدأ نخطط للمشروع النهائي بتاعنا</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الثاني (3-9)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-gavel"></i> جلسة "السياسات والقوانين"</h5>
+              <ul class="card-list">
+                <li>إزاي نكتب سياسة للمتطوعين أو دليل استخدام</li>
+                <li>إزاي نطبق القوانين بطريقة عادلة</li>
+                <li>التطبيق: نعمل مسودة لدليل المتطوعين الخاص بالفريق</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الثالث (10-16)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-chart-bar"></i> جلسة "إزاي تقيس أداء الناس"</h5>
+              <ul class="card-list">
+                <li>طرق تقييم الأداء المختلفة (مش كلها شهادات تقدير)</li>
+                <li>إزاي تتابع تارجتات كل شخص</li>
+                <li>التطبيق: كل واحد فينا يقيّم نفسه ويقيّم عضو ف الفريق</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="month-section">
+            <h4 class="month-title"><i class="fas fa-calendar-week"></i> الأسبوع الرابع (17-23)</h4>
+            <div class="week-plan">
+              <h5 class="week-title"><i class="fas fa-graduation-cap"></i> جلسة "المشروع النهائي"</h5>
+              <ul class="card-list">
+                <li>مشروع التخرج: هنمثل إننا مسئولين HR في منظمة جديدة</li>
+                <li>هنعمل كل حاجة من الألف للياء: نعلن عن وظائف، نعمل انترفيوهات، نختار، ندرب، ونقيم</li>
+                <li>هنقدم ف النهاية تقرير عن أداء "الموظفين" اللي اخترناهم وإزاي كان أداء الفريق</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+  <!-- قسم الشكر والوداع -->
+  <div class="thanks-section">
+    <h2 class="thanks-title">كلمة شكر من بيلو وسعد</h2>
+    
+    <div class="thanks-message">
+      <p>يا جماعة، من سعد وبيلو وكل فريق تطوير الـ HR، بنشكركم أوي على وقتكم واهتمامكم. شكراً ليكوا على دعمكم وثقتكم فينا، واللي بتكون دافع كبير لينا علشان نكمل ونتطور.</p>
+      
+      <p>بنتمنى تكونوا استمتعتم بالعرض التقديمي، وعرفنا نوصل ليكوا رسالتنا بطريقة واضحة وممتعة. احنا متحمسين نشتغل على الخطة اللي قدمناها علشان نطور من أدائنا ونكون أفضل فريق ممكن.</p>
+      
+    </div>
+    
+    <div class="saad-profile">
+      <img src="./assets/home/SAAD.jpg" alt="سعد المرجاوي" class="saad-image">
+      <div class="saad-name">سعد المرجاوي</div>
+      <div class="saad-role">HRD LEADER</div>
+    </div>
+    
+    <div class="goodbye-message">
+      <p>باي من غير سلام عشان بيلو مبيودعش حد احنا هنشوفكوا تاني في تاسك جديد، وبرزنتيشن جديد!</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // تهيئة الصفحة
+  document.addEventListener('DOMContentLoaded', function() {
+    // إنشاء الجزيئات المتحركة
+    createParticles();
+    
+    // تهيئة شخصية بيلو التفاعلية
+    setupBiloCharacter();
+    
+    // تفعيل تأثيرات الظهور عند التمرير
+    setupScrollAnimations();
+    
+    // إعداد تفاعل بيلو مع عناصر الصفحة
+    setupBiloInteractions();
+    
+    // تحميل أيقونات Feather
+    if (typeof feather !== 'undefined') {
+      feather.replace();
+    }
+  });
+
+  // إنشاء الجزيئات المتحركة
+  function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    const count = Math.floor(window.innerWidth / 20);
+    
+    for (let i = 0; i < count; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      
+      const size = Math.random() * 5 + 2;
+      const posX = Math.random() * window.innerWidth;
+      const duration = Math.random() * 15 + 10;
+      const delay = Math.random() * 10;
+      
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${posX}px`;
+      particle.style.bottom = '0';
+      particle.style.animationDuration = `${duration}s`;
+      particle.style.animationDelay = `${delay}s`;
+      
+      particlesContainer.appendChild(particle);
+    }
+  }
+  
+  // إعداد شخصية بيلو التفاعلية - النسخة المحسنة
+  function setupBiloCharacter() {
+    const biloCharacter = document.getElementById('bilo-character');
+    const biloTooltip = document.getElementById('bilo-tooltip');
+    const biloImage = document.getElementById('bilo-image');
+    
+    // رسالة ترحيبية عند تحميل الصفحة مع تأثيرات
+    setTimeout(() => {
+      biloTooltip.textContent = 'احنا هنا علشان نقدم لكم أفضل عرض تقديمي! فريقنا بيشتغل بجد علشان نطور أدائنا.';
+      biloCharacter.classList.add('active');
+      biloCharacter.classList.add('bilo-welcoming');
+      
+      setTimeout(() => {
+        biloCharacter.classList.remove('active');
+        biloCharacter.classList.remove('bilo-welcoming');
+      }, 8000);
+    }, 1500);
+    
+    // إظهار الرسالة عند النقر على بيلو
+    biloCharacter.addEventListener('click', function() {
+      const messages = [
+        'فريق تطوير الموارد البشرية بيسعى دايماً علشان يتطور ويتحسن!',
+        'نقاط قوتنا بتكون في شغلنا الجماعي وإبداعنا.',
+        'بنسعى نكتسب مهارات جديدة علشان نطور أدائنا.',
+        'شكراً لدعمكم وثقتكم في فريقنا!'
+      ];
+      
+      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+      biloTooltip.textContent = randomMessage;
+      
+      biloCharacter.classList.add('active');
+      biloCharacter.classList.add('bilo-dancing');
+      
+      setTimeout(() => {
+        biloCharacter.classList.remove('active');
+        biloCharacter.classList.remove('bilo-dancing');
+      }, 6000);
+    });
+    
+    // تأثير اهتزاز عند المرور بالفأرة
+    biloCharacter.addEventListener('mouseenter', function() {
+      biloCharacter.classList.add('bilo-welcoming');
+    });
+    
+    biloCharacter.addEventListener('mouseleave', function() {
+      biloCharacter.classList.remove('bilo-welcoming');
+    });
+  }
+  
+  // تفعيل تأثيرات الظهور عند التمرير
+  function setupScrollAnimations() {
+    const animatedElements = document.querySelectorAll('.animate-card');
+    
+    function checkScroll() {
+      animatedElements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+        
+        if (elementPosition < screenPosition) {
+          element.style.opacity = 1;
+        }
+      });
+    }
+    
+    // التحقق عند التحميل وعند التمرير
+    window.addEventListener('load', checkScroll);
+    window.addEventListener('scroll', checkScroll);
+  }
+  
+  // إعداد تفاعل بيلو مع عناصر الصفحة
+  function setupBiloInteractions() {
+    const biloCharacter = document.getElementById('bilo-character');
+    const biloTooltip = document.getElementById('bilo-tooltip');
+    
+    // الحصول على جميع العناصر التي تحتوي على رسالة لبيلو
+    const interactiveElements = document.querySelectorAll('[data-bilo-message]');
+    let timeoutId;
+    
+    // إضافة تفاعل المرور بالفأرة لكل عنصر
+    interactiveElements.forEach(element => {
+      element.addEventListener('mouseenter', function() {
+        // إلغاء المؤقت السابق إذا كان موجوداً
+        clearTimeout(timeoutId);
+        
+        // عرض الرسالة المخصصة للعنصر
+        biloTooltip.textContent = this.getAttribute('data-bilo-message');
+        biloCharacter.classList.add('active');
+      });
+      
+      element.addEventListener('mouseleave', function() {
+        // إخفاء الرسالة بعد تأخير بسيط
+        timeoutId = setTimeout(() => {
+          biloCharacter.classList.remove('active');
+        }, 1000);
+      });
+    });
+  }
+</script>
+</body>
+</html>
